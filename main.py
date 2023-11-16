@@ -1,24 +1,25 @@
 import random
 import sys
 
-from PyQt5 import uic
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QPen
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import QPainter, QPen, QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 
 
 class FlagMaker(QMainWindow):
     def __init__(self):
         super().__init__()
         f = open("UI.ui")
-        uic.loadUi(f, self)
+        self.generate = QPushButton(self)
+        self.generate.setGeometry(400, 800, 100, 50)
+        self.generate.setText("Generate")
+        self.setGeometry(0, 0, 1900, 1000)
         self.flag = False
         self.generate.clicked.connect(self.generateListener)
 
     def paintEvent(self, event):
         if self.flag:
             painter = QPainter(self)
-            painter.setPen(QPen(Qt.yellow, 10))
+            painter.setPen(QPen(QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), 10))
             rand = random.randint(50, 1000)
             painter.drawEllipse(100, 40, rand, rand)
             self.flag = False
